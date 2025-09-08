@@ -6,7 +6,7 @@ import {createSelector} from 'reselect';
 import {Posts, Preferences} from 'mattermost-redux/constants';
 
 import {getCurrentUser} from 'mattermost-redux/selectors/entities/common';
-import {getMyPreferences} from 'mattermost-redux/selectors/entities/preferences';
+import {getMyPreferences, getBool} from 'mattermost-redux/selectors/entities/preferences';
 import {getUsers, getCurrentUserId, getUserStatuses} from 'mattermost-redux/selectors/entities/users';
 import {getConfig, getFeatureFlagValue} from 'mattermost-redux/selectors/entities/general';
 
@@ -799,4 +799,10 @@ export function makeGetPostAcknowledgementsWithProfiles(): (state: GlobalState, 
             }).sort((a, b) => b.acknowledgedAt - a.acknowledgedAt);
         },
     );
+}
+
+export function isPostReadReceiptsEnabled(state: GlobalState) {
+    // Check if read receipts are enabled via user preferences
+    // This integrates with the user's "Show read receipts" setting in Display preferences
+    return getBool(state, Preferences.CATEGORY_DISPLAY_SETTINGS, Preferences.POST_READ_RECEIPTS_ENABLED, true);
 }
