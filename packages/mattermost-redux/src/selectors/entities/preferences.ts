@@ -34,7 +34,7 @@ export function get(state: GlobalState, category: string, name: string, defaultV
 
 export function getBool(state: GlobalState, category: string, name: string, defaultValue = false): boolean {
     const value = get(state, category, name, String(defaultValue));
-    return value !== 'false';
+    return value === 'true';
 }
 
 export function getInt(state: GlobalState, category: string, name: string, defaultValue = 0): number {
