@@ -36,7 +36,6 @@ const Preferences = {
     DISPLAY_PREFER_USERNAME: 'username',
     MENTION_KEYS: 'mention_keys',
     USE_MILITARY_TIME: 'use_military_time',
-    POST_READ_RECEIPTS_ENABLED: 'post_read_receipts_enabled',
 
     CATEGORY_ACTIONS_MENU: 'actions_menu',
     NAME_ACTIONS_MENU_TUTORIAL_STATE: 'actions_menu_tutorial_state',

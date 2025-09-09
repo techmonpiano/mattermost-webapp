@@ -51,7 +51,6 @@ function getDisplayStateFromProps(props: Props) {
         lastActiveDisplay: props.lastActiveDisplay.toString(),
         oneClickReactionsOnPosts: props.oneClickReactionsOnPosts,
         clickToReply: props.clickToReply,
-        postReadReceiptsEnabled: props.postReadReceiptsEnabled,
     };
 }
 
@@ -127,7 +126,6 @@ type Props = {
     clickToReply: string;
     linkPreviewDisplay: string;
     oneClickReactionsOnPosts: string;
-    postReadReceiptsEnabled: string;
     emojiPickerEnabled: boolean;
     timezoneLabel: string;
     lastActiveDisplay: boolean;
@@ -153,9 +151,7 @@ type State = {
     linkPreviewDisplay: string;
     lastActiveDisplay: string;
     oneClickReactionsOnPosts: string;
-    postReadReceiptsEnabled: string;
     clickToReply: string;
-    postReadReceiptsEnabled: string;
     handleSubmit?: () => void;
     serverError?: string;
 }
@@ -312,12 +308,6 @@ export default class UserSettingsDisplay extends React.PureComponent<Props, Stat
             name: Preferences.CLICK_TO_REPLY,
             value: this.state.clickToReply,
         };
-        const postReadReceiptsPreference = {
-            user_id: userId,
-            category: Preferences.CATEGORY_DISPLAY_SETTINGS,
-            name: Preferences.POST_READ_RECEIPTS_ENABLED,
-            value: this.state.postReadReceiptsEnabled,
-        };
 
         this.setState({isSaving: true});
 
@@ -333,7 +323,6 @@ export default class UserSettingsDisplay extends React.PureComponent<Props, Stat
             availabilityStatusOnPostsPreference,
             oneClickReactionsOnPostsPreference,
             colorizeUsernamesPreference,
-            postReadReceiptsPreference,
         ];
 
         this.trackChangeIfNecessary(collapsedReplyThreadsPreference, this.props.collapsedReplyThreads);
@@ -385,10 +374,6 @@ export default class UserSettingsDisplay extends React.PureComponent<Props, Stat
 
     handleClickToReplyRadio = (clickToReply: string) => {
         this.setState({clickToReply});
-    }
-
-    handlePostReadReceiptsRadio = (postReadReceiptsEnabled: string) => {
-        this.setState({postReadReceiptsEnabled});
     }
 
     handleOnChange(e: React.ChangeEvent, display: {[key: string]: any}) {
@@ -1087,35 +1072,6 @@ export default class UserSettingsDisplay extends React.PureComponent<Props, Stat
             );
         }
 
-
-        const postReadReceiptsSection = this.createSection({
-            section: Preferences.POST_READ_RECEIPTS_ENABLED,
-            display: 'postReadReceiptsEnabled',
-            value: this.state.postReadReceiptsEnabled,
-            defaultDisplay: 'true',
-            title: {
-                id: t('user.settings.display.postReadReceiptsTitle'),
-                message: 'Show read receipts',
-            },
-            firstOption: {
-                value: 'true',
-                radionButtonText: {
-                    id: t('user.settings.sidebar.on'),
-                    message: 'On',
-                },
-            },
-            secondOption: {
-                value: 'false',
-                radionButtonText: {
-                    id: t('user.settings.sidebar.off'),
-                    message: 'Off',
-                },
-            },
-            description: {
-                id: t('user.settings.display.postReadReceiptsDescription'),
-                message: 'When enabled, you will see read receipts for messages you send.',
-            },
-        });
         let oneClickReactionsOnPostsSection;
         if (this.props.emojiPickerEnabled) {
             oneClickReactionsOnPostsSection = this.createSection({
@@ -1197,7 +1153,6 @@ export default class UserSettingsDisplay extends React.PureComponent<Props, Stat
                     {clickToReply}
                     {channelDisplayModeSection}
                     {oneClickReactionsOnPostsSection}
-                    {postReadReceiptsSection}
                     {languagesSection}
                 </div>
             </div>
